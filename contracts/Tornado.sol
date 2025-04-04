@@ -9,9 +9,6 @@
  * ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
  */
 
-// Modified solidity version to 0.8.29. Behavior is unchanged.
-// -- luksgrin, 2025-04-04
-
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.29;
 
@@ -91,7 +88,7 @@ abstract contract Tornado is MerkleTreeWithHistory, ReentrancyGuard {
     require(
       verifier.verifyProof(
         _proof,
-        [uint256(_root), uint256(_nullifierHash), uint256(_recipient), uint256(_relayer), _fee, _refund]
+        [uint256(_root), uint256(_nullifierHash), uint256(uint160(address(_recipient))), uint256(uint160(address(_relayer))), _fee, _refund]
       ),
       "Invalid withdraw proof"
     );
