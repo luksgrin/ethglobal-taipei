@@ -136,5 +136,26 @@ module.exports = {
         decimals: 6,
       },
     },
-  },
+    netId48898: {
+      Verifier: "0x685Bc3aBDbAAa9E87E0CFe4B772e266c88Ae8e53",
+      MiMCSponge: "0xA92d7B71d470B4972F0A42d5f4d21e0F851D9d2e",
+      eth: {
+        instanceAddress: {
+          "1": "0xD4f694e4B55C026F9fB98f0cb0faB65Ed42c669f",
+          "10": "0xFf6bDc1EE54301C0BD2393f03d24f7C23B5B265a",
+          "100": "0xb1dAbC876Cc8e5D599F1362c72Cd621B66a5c7f2",
+          "0.1": "0x5b8f233111381BaEd398F2Ce812e5Fa9acF1e9fa"
+        },
+        "symbol": "ETH",
+        "decimals": 18
+      },
+      "0x9BDCf71048DFd8ef1C03a7ae3EDe79F04A096B7F": {
+        instanceAddress: {
+          "1000000000000000000": "0x4E457c172144D4a1f08F61F54A37dd819a6ba28E",
+          "10000000000000000000": "0x1D0d17614870096Da33DF25cb185A840065815D6",
+          "100000000000000000000": "0xfbC71A6Ba7DdF32bD2C53ec0A9bd5df4e0d828Ac"
+        }
+      }
+    }
+  }
 }

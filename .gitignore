@@ -105,3 +105,6 @@ broadcast/
 
 # Anvil config
 src/anvil_config.json
+
+# Macos
+.DS_Store
