@@ -6,7 +6,7 @@ Tornado Cash is a non-custodial Ethereum and ERC20 privacy solution based on zkS
 
 To make a deposit user generates a secret and sends its hash (called a commitment) along with the deposit amount to the Tornado smart contract. The contract accepts the deposit and adds the commitment to its list of deposits.
 
-Later, the user decides to make a withdrawal. To do that, the user should provide a proof that he or she possesses a secret to an unspent commitment from the smart contract’s list of deposits. zkSnark technology allows that to happen without revealing which exact deposit corresponds to this secret. The smart contract will check the proof and transfer deposited funds to the address specified for withdrawal. An external observer will be unable to determine which deposit this withdrawal came from.
+Later, the user decides to make a withdrawal. To do that, the user should provide a proof that he or she possesses a secret to an unspent commitment from the smart contract's list of deposits. zkSnark technology allows that to happen without revealing which exact deposit corresponds to this secret. The smart contract will check the proof and transfer deposited funds to the address specified for withdrawal. An external observer will be unable to determine which deposit this withdrawal came from.
 
 You can read more about it in [this Medium article](https://medium.com/@tornado.cash/introducing-private-transactions-on-ethereum-now-42ee915babe0)
 
@@ -183,6 +183,12 @@ sed -i -e 's/pragma solidity \^0.6.0/pragma solidity 0.5.17/g' ./build/circuits/
 
 This hackathon project seeks to simplify Tornado Cash's setup so that it uses `Foundry` instead of the deprecated `Truffle` framework.
 
+Furthermore, it includes an initial integration attempt with [Curvegrid MultiBaaS](https://docs.curvegrid.com/multibaas/). More details can be found in [this section](#curvegrid).
+
+Tornado Cash has been a controversial project due to its privacy-preserving nature and the fact that it can be used to launder money. Its history will be deeply rooted into the history of Ethereum, as it implemented a practical application of zk-SNARKs before they were a household name.
+
+The Zircuit network, due to their AI-driven monitoring of transactions, is a fantastic candidate to integrate with Tornado Cash in a way that is both privacy-preserving and compliant with regulations, as suspicious deposits into Tornado Cash can be detected at sequencer level and quarantined; while innocent users can still transact without worrying about being flagged.
+
 > [!WARNING]
 > Given that this project depends of a contract instance implementing the MiMCSponge hash (which for the sake of optimization, was not written in Solidity and hence can't be verified), here we rely on the [onchain runtime bytecode](https://etherscan.io/address/0x83584f83f26af4edda9cbe8c730bc87c364b28fe#code) saved in `.json` file, parsed and deployed along with a manually-crafted initcode for the deployment to be successful.
 
@@ -313,7 +319,7 @@ containing the data needed by `src/cli.js` to run properly.
 Copy `.example.env` into `.env` and fill in the private key of the account that is going to deposit the funds. Next, run
 
 ```bash
-npm run deposit eth <DENOMINATION> --rpc <RPC_URL>
+node ./src/cli.js deposit eth <DENOMINATION> --rpc <RPC_URL>
 ```
 
 which creates a deposit of the amount ETH specified by `<DENOMINATION>` and creates the corresponding note. Take into account that in this guide, we have only deployed tornados for the following denominations of ETH: `0.1`, `1`, `10` and `100`. If the `--quiet` flag is not provided, an output similar to the following is shown (_here we chose 0.1 as denomination_):
@@ -332,7 +338,7 @@ Sender account ETH balance is 9999.880127263981720901
 To deposit an ERC20, the procedure is similar:
 
 ```bash
-npm run deposit <ERC20_ADDRESS> <DENOMINATION> --rpc <RPC_URL>
+node ./src/cli.js deposit <ERC20_ADDRESS> <DENOMINATION> --rpc <RPC_URL>
 ```
 
 and example with the deployed `MockERC20` and a denomination of `10000000000000000000` would result in the following output:
@@ -356,7 +362,7 @@ Record the notes as they are the only way to withdraw the funds deposited in Tor
 For the withdrawal, we will only need an aforementioned (unspent) note and a destination address. The writhdrawal is triggered by running:
 
 ```bash
-npm run withdraw <NOTE> <DESTINATION_ADDRESS> --rpc <RPC_URL>
+node ./src/cli.js withdraw <NOTE> <DESTINATION_ADDRESS> --rpc <RPC_URL>
 ```
 
 (_To ensure privacy, change the private key specified in the .env file_).
@@ -373,3 +379,79 @@ Done
 ```
 
 The procedure is exactly the same for ERC20 withdrawals.
+
+## Deployments
+
+### Zircuit Garfield testnet
+
+Chain data
+
+| | |
+|:--|:--|
+| Public RPC endpoint | https://garfield-testnet.zircuit.com/ |
+| Chain ID | 48898 |
+
+> [!NOTE]
+> Using the `cli.js` script by means of the public endpoint results in the following error:
+> ```bash
+> Error: ranges over 10000 blocks are not supported on freetier
+> ```
+> A hacky workaround is modifying the starting query block (at [cli.js#L147](src/cli.js#L147)), but this error will start popping up again once 10000 blocks have passed since the deployment of the contracts.
+
+Contract Addresses
+
+| Contract | Address |
+|:---------|:--------|
+| `Verifier.sol` | [0x685Bc3aBDbAAa9E87E0CFe4B772e266c88Ae8e53](https://explorer.garfield-testnet.zircuit.com/address/0x685Bc3aBDbAAa9E87E0CFe4B772e266c88Ae8e53) |
+| `Hasher.sol` | [0xA92d7B71d470B4972F0A42d5f4d21e0F851D9d2e](https://explorer.garfield-testnet.zircuit.com/address/0xA92d7B71d470B4972F0A42d5f4d21e0F851D9d2e) |
+| `ERC20Mock.sol` | [0x9BDCf71048DFd8ef1C03a7ae3EDe79F04A096B7F](https://explorer.garfield-testnet.zircuit.com/address/0x9BDCf71048DFd8ef1C03a7ae3EDe79F04A096B7F) |
+| `Tornado.sol` (0.1 ETH) | [0x5b8f233111381BaEd398F2Ce812e5Fa9acF1e9fa](https://explorer.garfield-testnet.zircuit.com/address/0x5b8f233111381BaEd398F2Ce812e5Fa9acF1e9fa) |
+| `Tornado.sol` (1 ETH) | [0xD4f694e4B55C026F9fB98f0cb0faB65Ed42c669f](https://explorer.garfield-testnet.zircuit.com/address/0xD4f694e4B55C026F9fB98f0cb0faB65Ed42c669f) |
+| `Tornado.sol` (10 ETH) | [0xFf6bDc1EE54301C0BD2393f03d24f7C23B5B265a](https://explorer.garfield-testnet.zircuit.com/address/0xFf6bDc1EE54301C0BD2393f03d24f7C23B5B265a) |
+| `Tornado.sol` (100 ETH) | [0xb1dAbC876Cc8e5D599F1362c72Cd621B66a5c7f2](https://explorer.garfield-testnet.zircuit.com/address/0xb1dAbC876Cc8e5D599F1362c72Cd621B66a5c7f2) |
+| `Tornado.sol` (1 ERC20) | [0x4E457c172144D4a1f08F61F54A37dd819a6ba28E](https://explorer.garfield-testnet.zircuit.com/address/0x4E457c172144D4a1f08F61F54A37dd819a6ba28E) |
+| `Tornado.sol` (10 ERC20) | [0x1D0d17614870096Da33DF25cb185A840065815D6](https://explorer.garfield-testnet.zircuit.com/address/0x1D0d17614870096Da33DF25cb185A840065815D6) |
+| `Tornado.sol` (100 ERC20) | [0xfbC71A6Ba7DdF32bD2C53ec0A9bd5df4e0d828Ac](https://explorer.garfield-testnet.zircuit.com/address/0xfbC71A6Ba7DdF32bD2C53ec0A9bd5df4e0d828Ac) |
+
+
+## Curvegrid MultiBaaS
+
+The projects URL is: `https://zwgvgc6r4rbqhno6ztkrfgv4ya.multibaas.com/`.
+
+- 1️⃣ **A one-sentence summary of your project.**
+
+   This project attempted to integrate with [Curvegrid MultiBaaS](https://docs.curvegrid.com/multibaas/) to allow for a more seamless experience when interacting with the Tornado Cash instances and monitoring the state of the contracts, on Zircuit's Garfield testnet.
+
+- 2️⃣ **How you used MultiBaas and which network you deployed on.**
+
+   MultiBaas was used to register (_part of_) the contracts deployed on Zircuit's Garfield testnet. Not all contracts were registered due to the limits of the free tier. In particular, the registered contracts were:
+
+   | Contract | Address |
+   |:---------|:--------|
+   | `Verifier.sol` | [0x685Bc3aBDbAAa9E87E0CFe4B772e266c88Ae8e53](https://explorer.garfield-testnet.zircuit.com/address/0x685Bc3aBDbAAa9E87E0CFe4B772e266c88Ae8e53) |
+   | `Tornado.sol` (0.1 ETH) | [0x5b8f233111381BaEd398F2Ce812e5Fa9acF1e9fa](https://explorer.garfield-testnet.zircuit.com/address/0x5b8f233111381BaEd398F2Ce812e5Fa9acF1e9fa) |
+   | `Tornado.sol` (1 ETH) | [0xD4f694e4B55C026F9fB98f0cb0faB65Ed42c669f](https://explorer.garfield-testnet.zircuit.com/address/0xD4f694e4B55C026F9fB98f0cb0faB65Ed42c669f) |
+   | `Tornado.sol` (10 ETH) | [0xFf6bDc1EE54301C0BD2393f03d24f7C23B5B265a](https://explorer.garfield-testnet.zircuit.com/address/0xFf6bDc1EE54301C0BD2393f03d24f7C23B5B265a) |
+   | `Tornado.sol` (100 ETH) | [0xb1dAbC876Cc8e5D599F1362c72Cd621B66a5c7f2](https://explorer.garfield-testnet.zircuit.com/address/0xb1dAbC876Cc8e5D599F1362c72Cd621B66a5c7f2) |
+
+   The `Deposit` and `Withdraw` events are registered for the Tornado instances. Note that the `Deposit` event is **critical** to the Tornado Cash protocol, as it is used to build the Merkle tree for the retrieval of the root which is used to verify a withdrawal of a note.
+
+   A seamless monitoring of the `Deposit` event greatly facilitates the withdrawal of funds from Tornado.
+
+- 3️⃣ **A brief intro to your team and their social handles.**
+
+   The only team member is [luksgrin](https://github.com/luksgrin): Math PhD, occasional builder and Security Researcher.
+
+- 4️⃣ **Clear setup and testing instructions.**
+
+   For the setup of Tornado, refer to [Setup](#setup) section.
+
+- 5️⃣ **Your experience with MultiBaas (feedback, challenges, wins).**
+
+   The experience with MultiBaas was overall positive. The documentation is quite good and the platform is easy to use. It was extremely easy to register the smart contracts and add the relevant events to monitor.
+
+   However, the event monitoring was not successful. At the time of writing, the `Deposit` event is not being detected (see [the contract in the dashboard](https://zwgvgc6r4rbqhno6ztkrfgv4ya.multibaas.com/on-chain/ethtornado1/events)), although there were a couple of events emitted ([the most recent one being after linking the contract to the MultiBaasproject](https://explorer.garfield-testnet.zircuit.com/tx/0xb29a303df7a471c2e7ab043b4fa288e07816c6d07ac77319dcd055d3e523e6a6?activeTab=2)).
+
+   This was a huge drawback as it hindered the integration of the TypeScript SDK into a modernized `cli` script for a more seamless deposit and withdrawal experience.
+
+- 6️⃣ **A short video demo or slide deck.**
