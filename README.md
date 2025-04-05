@@ -183,6 +183,9 @@ sed -i -e 's/pragma solidity \^0.6.0/pragma solidity 0.5.17/g' ./build/circuits/
 
 This hackathon project seeks to simplify Tornado Cash's setup so that it uses `Foundry` instead of the deprecated `Truffle` framework.
 
+> [!WARNING]
+> Given that this project depends of a contract instance implementing the MiMCSponge hash (which for the sake of optimization, was not written in Solidity and hence can't be verified), here we rely on the [onchain runtime bytecode](https://etherscan.io/address/0x83584f83f26af4edda9cbe8c730bc87c364b28fe#code) saved in `.json` file, parsed and deployed along with a manually-crafted initcode for the deployment to be successful.
+
 ## Setup
 
 Install the dependencies:
@@ -198,7 +201,7 @@ and build the project:
 npm run build
 ```
 
->[!NOTICE]
+> [!NOTICE]
 > Here, the build instances for the circuits, along with the verification keys, are already given from the original Tornado Cash project. Due to circom compiler in js deprecation, building this ourselves may break the project. One reason may be that the `Verifier.sol` created will be different. For the sake of reproducibility, we will keep the original builds for circuits and keys.
 
 ## Test
