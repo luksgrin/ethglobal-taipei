@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Define the base directory path
-const baseDir = path.join(__dirname, 'broadcast', 'Deploy.s.sol');
+const baseDir = path.join(__dirname, '..','broadcast', 'Deploy.s.sol');
 
 // Object to store the parsed JSON data for each subdirectory
 const results = {
@@ -83,7 +83,7 @@ const outputContent = `require('dotenv').config()
 module.exports = ${JSON.stringify(results, null, 2)}
 `;
 
-const outputFile = path.join(__dirname, 'src', 'anvil_config.js');
+const outputFile = path.join(__dirname, 'anvil_config.js');
 
 fs.writeFileSync(outputFile, outputContent, 'utf8');
 console.log(`File written to ${outputFile}`);

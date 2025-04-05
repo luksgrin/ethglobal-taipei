@@ -264,7 +264,6 @@ async function withdraw({ deposit, currency, amount, recipient, relayerURL, refu
     }
   } else { // using private key
     const { proof, args } = await generateProof({ deposit, recipient, refund })
-
     if (!program.quiet) {
       console.log('Submitting withdraw transaction')
     }
@@ -621,7 +620,7 @@ async function main() {
       .command('withdraw <note> <recipient> [ETH_purchase]')
       .description('Withdraw a note to a recipient account using relayer or specified private key. You can exchange some of your deposit`s tokens to ETH during the withdrawal by specifing ETH_purchase (e.g. 0.01) to pay for gas in future transactions. Also see the --relayer option.')
       .action(async (noteString, recipient, refund) => {
-        const { currency, amount, netId, deposit } = parseNote(noteString)
+        const { currency, amount, netId, deposit } = parseNote(noteString);
         await init({ rpc: program.rpc, noteNetId: netId, currency, amount })
         await withdraw({ deposit, currency, amount, recipient, refund, relayerURL: program.relayer })
       })

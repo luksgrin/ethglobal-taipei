@@ -181,7 +181,7 @@ sed -i -e 's/pragma solidity \^0.6.0/pragma solidity 0.5.17/g' ./build/circuits/
 ```
 </details>
 
-This hackathon project seeks to simplify tornadocash's setup so that it uses `Foundry` instead of the deprecated `Truffle` framework.
+This hackathon project seeks to simplify Tornado Cash's setup so that it uses `Foundry` instead of the deprecated `Truffle` framework.
 
 ## Setup
 
@@ -191,6 +191,15 @@ Install the dependencies:
 forge install
 yarn install
 ```
+
+and build the project:
+
+```bash
+npm run build
+```
+
+>[!NOTICE]
+> Here, the build instances for the circuits, along with the verification keys, are already given from the original Tornado Cash project. Due to circom compiler in js deprecation, building this ourselves may break the project. One reason may be that the `Verifier.sol` created will be different. For the sake of reproducibility, we will keep the original builds for circuits and keys.
 
 ## Test
 
@@ -237,3 +246,127 @@ Chain ID
 Listening on 127.0.0.1:8545
 ```
 
+### Deployments
+
+To fully test Tornado cash, we'll need to deploy a mock ERC20 (this will allow us to deploy and test the tornado cash implementation with ERC20s too). We can do this directly with `forge create`:
+
+```bash
+forge create contracts/Mocks/ERC20Mock.sol:ERC20Mock --broadcast --rpc-url <RPC_URL> --private-key <PRIVATE_KEY>
+```
+
+_Note that when testing with anvil, we'd be using `127.0.0.1:8545` as endpoint and any private key provided by `anvil`._
+
+_Also note that, when using these scripts to deploy to non-testnets, it is preferred for security reasons to use `--interactives 1` rather than `--private-key <PRIVATE_KEY>`_.
+
+With the resulting ERC20 address (`<ERC20_ADDRESS>`), we can now fully deploy a set of Tornado Cash instances by running the `Deploy.s.sol` script:
+
+```bash
+forge script foundry_scripts/Deploy.s.sol \
+--sig "run(address[],uint256[])" \
+"[<ERC20_ADDRESS>,<ERC20_ADDRESS>,<ERC20_ADDRESS>]" \
+"[1000000000000000000,10000000000000000000,100000000000000000000]" \
+--broadcast \
+--rpc-url <RPC_URL> \
+--private-key <PRIVATE_KEY>
+```
+
+resulting in the following output:
+
+```bash
+== Logs ==
+  -> Verifier deployed at <VERIFIER_ADDRESS>
+  -> Hasher deployed at <HASHER_ADDRESS>
+  -> Tornado 1 * 0.1 ETH deployed at: <ETH_TORNADO_ADDRESS_1>
+  -> Tornado 10 * 0.1 ETH deployed at: <ETH_TORNADO_ADDRESS_2>
+  -> Tornado 100 * 0.1 ETH deployed at: <ETH_TORNADO_ADDRESS_3>
+  -> Tornado 1000 * 0.1 ETH deployed at: <ETH_TORNADO_ADDRESS_4>
+  -> Tornado with denomination of 1000000000000000000 for ERC20 address <ERC20_ADDRESS> deployed at <ERC20_TORNADO_ADDRESS_1>
+  -> Tornado with denomination of 10000000000000000000 for ERC20 address <ERC20_ADDRESS> deployed at <ERC20_TORNADO_ADDRESS_2>
+  -> Tornado with denomination of 100000000000000000000 for ERC20 address <ERC20_ADDRESS> deployed at <ERC20_TORNADO_ADDRESS_3>
+```
+
+_Note that the `Verifier` and `Hasher` are necessary for all the instances to work (and only need to be deployed one time)_. 
+
+### Interacting with Tornado instances
+
+The original Tornado Cash project came with a `cli` script to interact with the Tornado instances. Here, we modified the script so that it works with the latest broadcast instances.
+
+First we need to create a data structure that contains the Tornado addresses and their denominations. To obtain that, run:
+
+```bash
+npm run parseDeployments
+```
+
+which results in
+
+```bash
+File written to ethglobal-taipei/src/anvil_config.js
+```
+
+containing the data needed by `src/cli.js` to run properly.
+
+#### Depositing into Tornado
+
+Copy `.example.env` into `.env` and fill in the private key of the account that is going to deposit the funds. Next, run
+
+```bash
+npm run deposit eth <DENOMINATION> --rpc <RPC_URL>
+```
+
+which creates a deposit of the amount ETH specified by `<DENOMINATION>` and creates the corresponding note. Take into account that in this guide, we have only deployed tornados for the following denominations of ETH: `0.1`, `1`, `10` and `100`. If the `--quiet` flag is not provided, an output similar to the following is shown (_here we chose 0.1 as denomination_):
+
+```bash
+Your note: tornado-eth-0.1-31337-0xd7f3b09fc52c4ae50916560ffd29d0bf277edb242b91453efba6d0142f1e7594df8a7ec6431eb31c91cb964916e29638068b9f1db42bc0e74b2fa7db9b3d
+Tornado ETH balance is 0
+Sender account ETH balance is 9999.981639925142638153
+Amount: 0.1
+Value: 100000000000000000
+Tornado: 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
+Tornado ETH balance is 0.1
+Sender account ETH balance is 9999.880127263981720901
+```
+
+To deposit an ERC20, the procedure is similar:
+
+```bash
+npm run deposit <ERC20_ADDRESS> <DENOMINATION> --rpc <RPC_URL>
+```
+
+and example with the deployed `MockERC20` and a denomination of `10000000000000000000` would result in the following output:
+
+```bash
+Your note: tornado-0x5fbdb2315678afecb367f032d93f642f64180aa3-10000000000000000000-31337-0x5755aea1746f6ca05c420f26e2ed7b4887aebba1583051a12693fa756950f2a2c5883febad091f98676c8b58a965f2d7de1b72db78e57acd0913a19d91db
+Tornado Token Balance is 0
+Sender account Token Balance is 0
+Minting some test tokens to deposit // THIS OCCURS BECAUSE OUR MOCK ERC20 IS DESIGNED TO MINT TOKENS IF THE DEPOSITOR HAS A BALANCE OF 0
+Current allowance is 0
+Approving tokens for deposit
+Submitting deposit transaction
+Tornado Token Balance is 10
+Sender account Token Balance is 0
+```
+
+Record the notes as they are the only way to withdraw the funds deposited in Tornado.
+
+#### Withdrawing funds from Tornado
+
+For the withdrawal, we will only need an aforementioned (unspent) note and a destination address. The writhdrawal is triggered by running:
+
+```bash
+npm run withdraw <NOTE> <DESTINATION_ADDRESS> --rpc <RPC_URL>
+```
+
+(_To ensure privacy, change the private key specified in the .env file_).
+
+If the `--quiet` flag is not provided, it will result in an output similar to this:
+
+```bash
+Getting current state from tornado contract
+Generating SNARK proof
+Proof time: 2.719s
+Submitting withdraw transaction
+The transaction hash is ...
+Done
+```
+
+The procedure is exactly the same for ERC20 withdrawals.
