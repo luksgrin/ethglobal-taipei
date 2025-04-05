@@ -32,6 +32,11 @@
 
 // 2019 OKIMS
 
+
+// Modified solidity version to 0.8.29. Behavior is unchanged.
+// -- luksgrin, 2025-04-04
+
+
 pragma solidity ^0.8.29;
 
 library Pairing {

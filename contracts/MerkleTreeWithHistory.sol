@@ -7,7 +7,10 @@
  *    88    88.  .88 88       88    88 88.  .88 88.  .88 88.  .88 dP Y8.   .88 88.  .88       88 88    88
  *    dP    `88888P' dP       dP    dP `88888P8 `88888P8 `88888P' 88  Y88888P' `88888P8 `88888P' dP    dP
  * ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
- */
+*/
+
+// Modified solidity version to 0.8.29. Behavior is unchanged.
+// -- luksgrin, 2025-04-04
 
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.29;
