@@ -180,3 +180,73 @@ zkutil generate-verifier -p build/circuits/withdraw.params -v build/circuits/Ver
 sed -i -e 's/pragma solidity \^0.6.0/pragma solidity 0.5.17/g' ./build/circuits/Verifier.sol
 ```
 </details>
+
+This hackathon project seeks to simplify tornadocash's setup so that it uses `Foundry` instead of the deprecated `Truffle` framework.
+
+## Setup
+
+Install the dependencies:
+
+```bash
+forge install
+yarn install
+```
+
+## Test
+
+The project includes _basic_ tests in the `foundry_tests/` directory. To view the power of tornado cash in action, open another terminal and spin up an anvil instance:
+
+```bash
+anvil
+```
+
+resulting in
+
+```bash
+                             _   _
+                            (_) | |
+      __ _   _ __   __   __  _  | |
+     / _` | | '_ \  \ \ / / | | | |
+    | (_| | | | | |  \ V /  | | | |
+     \__,_| |_| |_|   \_/   |_| |_|
+
+    1.0.0-stable (e144b82070 2025-02-13T20:02:34.979686000Z)
+    https://github.com/foundry-rs/foundry
+
+Available Accounts
+==================
+
+(0) 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 (10000.000000000000000000 ETH)
+(1) 0x70997970C51812dc3A010C7d01b50e0d17dc79C8 (10000.000000000000000000 ETH)
+...
+
+Private Keys
+==================
+
+(0) 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+(1) 0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d
+...
+
+Chain ID
+==================
+
+31337
+
+Base Fee
+==================
+
+1000000000
+
+Gas Limit
+==================
+
+30000000
+
+Genesis Timestamp
+==================
+
+1743828330
+
+Listening on 127.0.0.1:8545
+```
+
