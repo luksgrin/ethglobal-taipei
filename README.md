@@ -201,7 +201,7 @@ and build the project:
 npm run build
 ```
 
-> [!NOTICE]
+> [!NOTE]
 > Here, the build instances for the circuits, along with the verification keys, are already given from the original Tornado Cash project. Due to circom compiler in js deprecation, building this ourselves may break the project. One reason may be that the `Verifier.sol` created will be different. For the sake of reproducibility, we will keep the original builds for circuits and keys.
 
 ## Test
