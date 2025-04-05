@@ -28,7 +28,6 @@ contract ERC20TornadoTest is Test, DeployVerifier, DeployERC20Tornado, DeployMiM
      * @notice Used to test that the setup is working.
      */
     function test_deploy() public {
-
         address erc20Address = 0x6B175474E89094C44Da98b954EedeAC495271d0F; // DAI address
 
         erc20Tornado = deployERC20Tornado(

@@ -10,7 +10,7 @@ contract DeployMiMCSponge is Script {
      *         0x    // Opcodes    | Stack
      *  [0x00] 60 80 // PUSH1 0x80 | 0x80
      *  [0x02] 60 40 // PUSH1 0x40 | 0x40 0x80
-     *  [0x04] 52    // MSTORE     | 
+     *  [0x04] 52    // MSTORE     |
      *  [0x05] 60 L  // PUSH1 L    | L
      *  [0x07] 80    // DUP1       | L L
      *  [0x08] 60 11 // PUSH1 0x11 | 0x11 L L
@@ -25,11 +25,12 @@ contract DeployMiMCSponge is Script {
      * @param runtimeBytecode The runtime bytecode of the contract.
      * @return creationBytecode The creation bytecode of the contract.
      */
-    function creationBytecodeFromRuntimeBytecode(bytes memory runtimeBytecode) internal pure returns (bytes memory creationBytecode){
-        require(
-            runtimeBytecode.length <= 0x6000,
-            "Runtime bytecode is larger than 24576 bytes"
-        );
+    function creationBytecodeFromRuntimeBytecode(bytes memory runtimeBytecode)
+        internal
+        pure
+        returns (bytes memory creationBytecode)
+    {
+        require(runtimeBytecode.length <= 0x6000, "Runtime bytecode is larger than 24576 bytes");
 
         bytes2 runtimeCodeSize = bytes2(uint16(runtimeBytecode.length));
         bytes1 pushOpcodeUsed;
@@ -62,21 +63,16 @@ contract DeployMiMCSponge is Script {
      */
     function deployMimcSponge() internal returns (address deployed) {
         bytes memory creationBytecode = creationBytecodeFromRuntimeBytecode(
-            vm.parseJsonBytes(
-                vm.readFile("contracts/MiMCSponge_bytecode.json"),
-                ".runtimeBytecode"
-            )
+            vm.parseJsonBytes(vm.readFile("contracts/MiMCSponge_bytecode.json"), ".runtimeBytecode")
         );
 
         assembly {
             deployed := create(0, add(creationBytecode, 0x20), mload(creationBytecode))
-            if iszero(deployed) {
-                revert(0, 0)
-            }
+            if iszero(deployed) { revert(0, 0) }
         }
     }
 
-    function run() virtual public {
+    function run() public virtual {
         vm.startBroadcast();
         address MimcSponge = deployMimcSponge();
         console.log("Deployed MimcSponge at:", MimcSponge);

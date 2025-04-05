@@ -2,5 +2,5 @@
 pragma solidity ^0.8.29;
 
 interface IDeployer {
-  function deploy(bytes memory _initCode, bytes32 _salt) external returns (address payable createdContract);
+    function deploy(bytes memory _initCode, bytes32 _salt) external returns (address payable createdContract);
 }

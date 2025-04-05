@@ -22,11 +22,7 @@ contract MiMCSpongeTest is Test, DeployMerkleTreeWithHistory, DeployMiMCSponge {
      * @dev The deployed contract is the result of the deployMerkleTree function.
      */
     function testDeployment() external view {
-        assertGt(
-            address(merkleTreeWithHistory).code.length,
-            0,
-            "Deployed contract's bytecode length is zero"
-        );
+        assertGt(address(merkleTreeWithHistory).code.length, 0, "Deployed contract's bytecode length is zero");
     }
 
     /**

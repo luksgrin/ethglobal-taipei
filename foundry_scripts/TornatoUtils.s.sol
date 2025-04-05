@@ -4,11 +4,7 @@ pragma solidity ^0.8.13;
 import {Script, console} from "forge-std/Script.sol";
 
 contract TornadoUtils is Script {
-
-    function withdraw(
-        string memory note,
-        string memory recipient
-    ) public {
+    function withdraw(string memory note, string memory recipient) public {
         vm.startBroadcast();
         string[] memory args = new string[](4);
         args[0] = "node";

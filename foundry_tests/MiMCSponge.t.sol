@@ -31,7 +31,6 @@ contract MiMCSpongeTest is Test, DeployMiMCSponge {
      * @dev The reference value is taken from the MerkleTreeWithHistory contract; which has that value hardcoded.
      */
     function testMiMCSponge() external view {
-
         uint256 R = uint256(ZERO_VALUE);
         uint256 C = 0;
         (R, C) = mimcSponge.MiMCSponge(R, C);
@@ -43,5 +42,4 @@ contract MiMCSpongeTest is Test, DeployMiMCSponge {
             "Hash of 'keccak256(\"tornado\") % FIELD_SIZE' is not equal to the expected value."
         );
     }
-
 }
