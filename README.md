@@ -403,7 +403,7 @@ Contract Addresses
 | Contract | Address |
 |:---------|:--------|
 | `Verifier.sol` | [0x685Bc3aBDbAAa9E87E0CFe4B772e266c88Ae8e53](https://explorer.garfield-testnet.zircuit.com/address/0x685Bc3aBDbAAa9E87E0CFe4B772e266c88Ae8e53) |
-| `Hasher.sol` | [0xA92d7B71d470B4972F0A42d5f4d21e0F851D9d2e](https://explorer.garfield-testnet.zircuit.com/address/0xA92d7B71d470B4972F0A42d5f4d21e0F851D9d2e) |
+| `Hasher` | [0xA92d7B71d470B4972F0A42d5f4d21e0F851D9d2e](https://explorer.garfield-testnet.zircuit.com/address/0xA92d7B71d470B4972F0A42d5f4d21e0F851D9d2e) |
 | `ERC20Mock.sol` | [0x9BDCf71048DFd8ef1C03a7ae3EDe79F04A096B7F](https://explorer.garfield-testnet.zircuit.com/address/0x9BDCf71048DFd8ef1C03a7ae3EDe79F04A096B7F) |
 | `Tornado.sol` (0.1 ETH) | [0x5b8f233111381BaEd398F2Ce812e5Fa9acF1e9fa](https://explorer.garfield-testnet.zircuit.com/address/0x5b8f233111381BaEd398F2Ce812e5Fa9acF1e9fa) |
 | `Tornado.sol` (1 ETH) | [0xD4f694e4B55C026F9fB98f0cb0faB65Ed42c669f](https://explorer.garfield-testnet.zircuit.com/address/0xD4f694e4B55C026F9fB98f0cb0faB65Ed42c669f) |
@@ -413,6 +413,36 @@ Contract Addresses
 | `Tornado.sol` (10 ERC20) | [0x1D0d17614870096Da33DF25cb185A840065815D6](https://explorer.garfield-testnet.zircuit.com/address/0x1D0d17614870096Da33DF25cb185A840065815D6) |
 | `Tornado.sol` (100 ERC20) | [0xfbC71A6Ba7DdF32bD2C53ec0A9bd5df4e0d828Ac](https://explorer.garfield-testnet.zircuit.com/address/0xfbC71A6Ba7DdF32bD2C53ec0A9bd5df4e0d828Ac) |
 
+### Zircuit Mainnet
+
+Chain data
+
+| | |
+|:--|:--|
+| Public RPC endpoint | https://mainnet.zircuit.com/ |
+| Chain ID | 48900 |
+
+
+Contract Addresses
+
+| Contract | Address |
+|:---------|:--------|
+| `Verifier.sol` | [0x9BDCf71048DFd8ef1C03a7ae3EDe79F04A096B7F](https://explorer.zircuit.com/address/0x9BDCf71048DFd8ef1C03a7ae3EDe79F04A096B7F) |
+| `Hasher` | [0x685Bc3aBDbAAa9E87E0CFe4B772e266c88Ae8e53](https://explorer.zircuit.com/address/0x685Bc3aBDbAAa9E87E0CFe4B772e266c88Ae8e53) |
+| `Tornado.sol` (0.1 ETH) | [0xA92d7B71d470B4972F0A42d5f4d21e0F851D9d2e](https://explorer.zircuit.com/address/0xA92d7B71d470B4972F0A42d5f4d21e0F851D9d2e) |
+| `Tornado.sol` (1 ETH) | [0x5b8f233111381BaEd398F2Ce812e5Fa9acF1e9fa](https://explorer.zircuit.com/address/0x5b8f233111381BaEd398F2Ce812e5Fa9acF1e9fa) |
+| `Tornado.sol` (10 ETH) | [0xD4f694e4B55C026F9fB98f0cb0faB65Ed42c669f](https://explorer.zircuit.com/address/0xD4f694e4B55C026F9fB98f0cb0faB65Ed42c669f) |
+| `Tornado.sol` (100 ETH) | [0xFf6bDc1EE54301C0BD2393f03d24f7C23B5B265a](https://explorer.zircuit.com/address/0xFf6bDc1EE54301C0BD2393f03d24f7C23B5B265a) |
+| `Tornado.sol` (1 ZRC) | [0xb1dAbC876Cc8e5D599F1362c72Cd621B66a5c7f2](https://explorer.zircuit.com/address/0xb1dAbC876Cc8e5D599F1362c72Cd621B66a5c7f2) |
+| `Tornado.sol` (1 ZRC) | [0xb1dAbC876Cc8e5D599F1362c72Cd621B66a5c7f2](https://explorer.zircuit.com/address/0xb1dAbC876Cc8e5D599F1362c72Cd621B66a5c7f2) |
+| `Tornado.sol` (10 ZRC) | [0x4E457c172144D4a1f08F61F54A37dd819a6ba28E](https://explorer.zircuit.com/address/0x4E457c172144D4a1f08F61F54A37dd819a6ba28E) |
+| `Tornado.sol` (100 ZRC) | [0x1D0d17614870096Da33DF25cb185A840065815D6](https://explorer.zircuit.com/address/0x1D0d17614870096Da33DF25cb185A840065815D6) |
+| `Tornado.sol` (1 USDT) | [0xfbC71A6Ba7DdF32bD2C53ec0A9bd5df4e0d828Ac](https://explorer.zircuit.com/address/0xfbC71A6Ba7DdF32bD2C53ec0A9bd5df4e0d828Ac) |
+| `Tornado.sol` (10 USDT) | [0x62DfcB3f4AEde1fA193138fd67f429878081b2e3](https://explorer.zircuit.com/address/0x62DfcB3f4AEde1fA193138fd67f429878081b2e3) |
+| `Tornado.sol` (100 USDT) | [0xA11908E92FE3b073A89136b05D0D6C9a5426CC44](https://explorer.zircuit.com/address/0xA11908E92FE3b073A89136b05D0D6C9a5426CC44) |
+| `Tornado.sol` (1 USDC) | [0xaDe2910F16c1f2cFe963d84d248d85748288D6Ca](https://explorer.zircuit.com/address/0xaDe2910F16c1f2cFe963d84d248d85748288D6Ca) |
+| `Tornado.sol` (10 USDC) | [0x41d1436B0F1737F3219c5D040508C98D56bC464a](https://explorer.zircuit.com/address/0x41d1436B0F1737F3219c5D040508C98D56bC464a) |
+| `Tornado.sol` (100 USDC) | [0x2522d533BcB8952fbAa7B7181699c0Da936EEc10](https://explorer.zircuit.com/address/0x2522d533BcB8952fbAa7B7181699c0Da936EEc10) |
 
 ## Curvegrid MultiBaaS
 
@@ -455,3 +485,73 @@ The projects URL is: `https://zwgvgc6r4rbqhno6ztkrfgv4ya.multibaas.com/`.
    This was a huge drawback as it hindered the integration of the TypeScript SDK into a modernized `cli` script for a more seamless deposit and withdrawal experience.
 
 - 6️⃣ **A short video demo or slide deck.**
+
+forge verify-contract \
+--verifier sourcify \
+0xA92d7B71d470B4972F0A42d5f4d21e0F851D9d2e \
+contracts/Hasher.sol:Hasher \
+--root . \
+--chain-id $ZIRCUIT_CHAIN_ID
+
+forge verify-contract \
+--verifier sourcify \
+0x9BDCf71048DFd8ef1C03a7ae3EDe79F04A096B7F \
+contracts/Mocks/ERC20Mock.sol:ERC20Mock \
+--root . \
+--chain-id $ZIRCUIT_CHAIN_ID
+
+forge verify-contract \
+--verifier sourcify \
+0x5b8f233111381BaEd398F2Ce812e5Fa9acF1e9fa \
+contracts/ETHTornado.sol:ETHTornado \
+--root . \
+--chain-id $ZIRCUIT_CHAIN_ID \
+--constructor-args $(cast abi-encode "constructor(address,address,uint256,uint32)" "0x9BDCf71048DFd8ef1C03a7ae3EDe79F04A096B7F" "0x685Bc3aBDbAAa9E87E0CFe4B772e266c88Ae8e53" 100000000000000000 20)
+
+forge verify-contract \
+--verifier sourcify \
+0xD4f694e4B55C026F9fB98f0cb0faB65Ed42c669f \
+contracts/ETHTornado.sol:ETHTornado \
+--root . \
+--chain-id $ZIRCUIT_CHAIN_ID \
+--constructor-args $(cast abi-encode "constructor(address,address,uint256,uint32)" "0x9BDCf71048DFd8ef1C03a7ae3EDe79F04A096B7F" "0x685Bc3aBDbAAa9E87E0CFe4B772e266c88Ae8e53" 1000000000000000000 20)
+
+forge verify-contract \
+--verifier sourcify \
+0xFf6bDc1EE54301C0BD2393f03d24f7C23B5B265a \
+contracts/ETHTornado.sol:ETHTornado \
+--root . \
+--chain-id $ZIRCUIT_CHAIN_ID \
+--constructor-args $(cast abi-encode "constructor(address,address,uint256,uint32)" "0x9BDCf71048DFd8ef1C03a7ae3EDe79F04A096B7F" "0x685Bc3aBDbAAa9E87E0CFe4B772e266c88Ae8e53" 10000000000000000000 20)
+
+forge verify-contract \
+--verifier sourcify \
+0xb1dAbC876Cc8e5D599F1362c72Cd621B66a5c7f2 \
+contracts/ETHTornado.sol:ETHTornado \
+--root . \
+--chain-id $ZIRCUIT_CHAIN_ID \
+--constructor-args $(cast abi-encode "constructor(address,address,uint256,uint32)" "0x9BDCf71048DFd8ef1C03a7ae3EDe79F04A096B7F" "0x685Bc3aBDbAAa9E87E0CFe4B772e266c88Ae8e53" 100000000000000000000 20)
+
+forge verify-contract \
+--verifier sourcify \
+0x4E457c172144D4a1f08F61F54A37dd819a6ba28E \
+contracts/ERC20Tornado.sol:ERC20Tornado \
+--root . \
+--chain-id $ZIRCUIT_CHAIN_ID \
+--constructor-args $(cast abi-encode "constructor(address,address,address,uint256,uint32)" "0x9BDCf71048DFd8ef1C03a7ae3EDe79F04A096B7F" "0x9BDCf71048DFd8ef1C03a7ae3EDe79F04A096B7F" "0x685Bc3aBDbAAa9E87E0CFe4B772e266c88Ae8e53" 1000000000000000000 20)
+
+forge verify-contract \
+--verifier sourcify \
+0x1D0d17614870096Da33DF25cb185A840065815D6 \
+contracts/ERC20Tornado.sol:ERC20Tornado \
+--root . \
+--chain-id $ZIRCUIT_CHAIN_ID \
+--constructor-args $(cast abi-encode "constructor(address,address,address,uint256,uint32)" "0x9BDCf71048DFd8ef1C03a7ae3EDe79F04A096B7F" "0x9BDCf71048DFd8ef1C03a7ae3EDe79F04A096B7F" "0x685Bc3aBDbAAa9E87E0CFe4B772e266c88Ae8e53" 10000000000000000000 20)
+
+forge verify-contract \
+--verifier sourcify \
+0xfbC71A6Ba7DdF32bD2C53ec0A9bd5df4e0d828Ac \
+contracts/ERC20Tornado.sol:ERC20Tornado \
+--root . \
+--chain-id $ZIRCUIT_CHAIN_ID \
+--constructor-args $(cast abi-encode "constructor(address,address,address,uint256,uint32)" "0x9BDCf71048DFd8ef1C03a7ae3EDe79F04A096B7F" "0x9BDCf71048DFd8ef1C03a7ae3EDe79F04A096B7F" "0x685Bc3aBDbAAa9E87E0CFe4B772e266c88Ae8e53" 100000000000000000000 20)
